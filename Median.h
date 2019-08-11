@@ -1,34 +1,36 @@
 #pragma once
-#include <set>
+#include <queue>
 
+template <typename ValueType,
+          typename = std::enable_if_t<std::is_arithmetic<ValueType>::value>>
 class Median
 {
 public:
     Median() = default;
 
-    void add(int number);
+    void add(ValueType entry);
     double getMedian() const;
 
 private:
-    std::multiset<int> numbers_;
+    std::priority_queue<ValueType> leftHalf_;
+    std::priority_queue<ValueType, std::vector<ValueType>, std::greater<ValueType>> rightHalf_;
 };
 
-/*
- *
+template <typename ValueType>
+void Median<ValueType>::add(ValueType number)
+{
 
-Напишете структура данни, която поддържа две операции:
-1. Добавяне на число към извадката.
-2. Смятане на медианата на досега добавените числа.
-Решението може да е на всякакъв език, но нещата, които ценим, са:
-1. Написан е на C++ (CMake for build system)
-2. Добре структуриран код ( лесен за четене и разбиране )
-3. Има автоматични тестове
-4. Хостнат е в github.com (или bitbucket.com, или gitlab.com )
-5. Операцийте добавяне на число и смятане на мериана имат минимална алгоритмична сложност
+}
 
-==================================
-
-Няма срок да се предаде решение, но все пак ще е добре ако се вместят в някакви разумни граници.
-
-Бих искал да добавя едно допълнително условие към задачата за домашна работа. Бихме искали версията на С++ да е максимално C++14. Това е.
-*/
+template <typename ValueType>
+double Median<ValueType>::getMedian() const
+{
+    if(leftHalf_.size() == rightHalf_.size())
+    {
+        return (leftHalf_.top() + rightHalf_.top()) / 2.0;
+    }
+    else {
+        //todo
+        return 0.0;
+    }
+}
