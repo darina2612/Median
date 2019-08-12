@@ -1,4 +1,4 @@
-#include "Median.h"
+#include "Median.hpp"
 #include <iostream>
 
 int main()

@@ -1,15 +1,14 @@
 #pragma once
 #include <queue>
+#include <limits>
 
 template <typename ValueType>
 class Median
 {
-    static_assert (std::is_arithmetic<ValueType>::value, "Template type must be arithmetic.");
+    static_assert(std::is_arithmetic<ValueType>::value, "Template type must be arithmetic.");
 
 public:
-    Median() = default;
-
-    void add(const ValueType& entry);
+    void add(ValueType entry);
     double getMedian() const;
 
 private:
@@ -18,7 +17,7 @@ private:
 };
 
 template <typename ValueType>
-void Median<ValueType>::add(const ValueType& entry)
+void Median<ValueType>::add(ValueType entry)
 {
     if(leftHalf_.empty() && rightHalf_.empty())
     {
@@ -54,8 +53,7 @@ double Median<ValueType>::getMedian() const
 {
     if(leftHalf_.empty() && rightHalf_.empty())
     {
-        //todo what?
-        return 0.0;
+        return std::numeric_limits<double>::quiet_NaN();
     }
     if(leftHalf_.size() == rightHalf_.size())
     {
